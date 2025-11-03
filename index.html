@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="Integrated grasp and motion planning improves robotic pick-and-place in cluttered environments, boosting accuracy and success rates."
+          name="description">
+    <meta content="robotic manipulation, pick and place, grasp planning, motion planning, grasp affordances, workspace goal regions, Franka Emika robot, cluttered environments, manipulation tasks"
+          name="keywords">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Lazy Evaluation of Multi-Grasp Goals Guided by Motion Planning in Pick-and-Place Object Manipulation</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-G8KB5YT09B"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-G8KB5YT09B');
+    </script>
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+          rel="stylesheet">
+
+    <link href="./static/css/bulma.min.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+    <link href="./static/css/bulma-carousel.min.css" rel="stylesheet">
+    <link href="./static/css/bulma-slider.min.css" rel="stylesheet">
+    <link href="./static/css/fontawesome.all.min.css" rel="stylesheet">
+    <link href="./static/css/video-comparison.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css"
+          rel="stylesheet">
+    <link href="./static/css/index.css" rel="stylesheet">
+    <link href="./static/images/favicon.svg" rel="icon">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js?v=1"></script>
+    <script src="./static/js/video-comparison.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered">
+                <div class="column has-text-centered">
+                    <h1 class="title is-1 publication-title">Lazy Evaluation of Multi-Grasp Goals Guided by Motion
+                        Planning in Pick-and-Place Object Manipulation</h1>
+                    <div class="is-size-5 publication-authors">
+                        <span class="author-block">
+                          <a href="https://profiles.cardiff.ac.uk/research-staff/dumanf">Furkan Duman</a><sup>1</sup>,
+                        </span>
+                        <span class="author-block">
+                          <a href="https://profiles.cardiff.ac.uk/research-staff/toke">Emin Safa Tok</a><sup>1</sup>,
+                        </span>
+                        <span class="author-block">
+                          <a href="https://profiles.cardiff.ac.uk/staff/hernandezvegaj">Juan Hernández</a><sup>1</sup>,
+                        </span>
+                    </div>
+
+                    <div class="is-size-5 publication-authors">
+                        <span class="author-block"><sup>1</sup> Cardiff University</span>
+                    </div>
+
+                    <div class="column has-text-centered">
+                        <div class="publication-links">
+                            <!-- PDF Link. -->
+                            <span class="link-block">
+                                <a class="external-link button is-normal is-rounded is-dark"
+                                   href="https://arxiv.org/pdf/" disabled="">
+                                    <span class="icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </span>
+                                  <span>Paper</span>
+                                </a>
+                              </span>
+                            <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark"
+                   href="https://arxiv.org/abs/" disabled="">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+                            <!-- Video Link. -->
+                            <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark"
+                   href="https://youtu.be/0_MltWxtiNw?si=N_kqMZ7Iijt_O-mA">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+                            <!-- Code Link. -->
+                            <span class="link-block">
+                <a class="external-link button is-normal is-rounded is-dark"
+                   href="https://github.com/google/">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero teaser">
+    <div class="container is-max-desktop">
+        <div class="hero-body">
+            <h2 class="subtitle has-text-centered">
+                <img src="static/images/pipeline.png">
+            </h2>
+        </div>
+    </div>
+</section>
+
+<section class="hero is-light is-small">
+    <div class="hero-body">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-full-width centerColumn">
+                    <div class="slider-container" id="sliderContainer">
+                        <video autoplay class="video-bottom" loop muted playsinline
+                               src="static/videos/Single 2-2.mp4"></video>
+                        <video autoplay class="video-top" loop muted playsinline
+                               src="static/videos/WGR 2-2.mp4"></video>
+                        <div class="slider" id="slider">
+                        <span class="slider-arrow" id="sliderArrow">
+                            <svg fill="white" height="800px" viewBox="0 0 24 24" width="800px"
+                                 xmlns="http://www.w3.org/2000/svg">
+                            <path d="M16.1359 18.2928C16.5264 18.6833 17.1596 18.6833 17.5501 18.2928L22.4375 13.4006C23.2179 12.6194 23.2176 11.3536 22.4369 10.5728L17.5465 5.68247C17.156 5.29195 16.5228 5.29195 16.1323 5.68247C15.7418 6.073 15.7418 6.70616 16.1323 7.09669L20.3179 11.2823C20.7085 11.6729 20.7085 12.306 20.3179 12.6965L16.1359 16.8786C15.7454 17.2691 15.7454 17.9023 16.1359 18.2928Z"
+                                  fill="#FFF"/>
+                            <path d="M7.88675 5.68247C7.49623 5.29195 6.86307 5.29195 6.47254 5.68247L1.58509 10.5747C0.804698 11.3559 0.805008 12.6217 1.58579 13.4024L6.47615 18.2928C6.86667 18.6833 7.49984 18.6833 7.89036 18.2928C8.28089 17.9023 8.28089 17.2691 7.89036 16.8786L3.70471 12.6929C3.31419 12.3024 3.31419 11.6692 3.70472 11.2787L7.88675 7.09669C8.27728 6.70616 8.27728 6.073 7.88675 5.68247Z"
+                                  fill="#FFF"/>
+                            </svg>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="columns is-centered">
+                <div class="column is-full-width centerColumn">
+                    <div class="video-selector" id="videoSelector">
+                        <!-- Video options will be loaded here by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <!-- Abstract. -->
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Abstract</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        Pick and place operations are part of the fundamental actions that enable
+                        robotic object manipulation in complex environments. Such operations
+                        present significant challenges, particularly when determining the grasp
+                        affordances of the objects of interest, and especially when calculating the
+                        robot motions to grasp such objects. A commonly used approach is to
+                        solve these two problems separately, i.e., grasp and motion planning.
+                        However, in cluttered environments, this separation can lead to issues
+                        where generated grasp poses are infeasible for the robot’s end-effector,
+                        resulting in inefficient searches. To address this, we propose a pipeline
+                        that integrates the capabilities of a grasp planner and motion planner to
+                        jointly solve manipulation tasks. Our approach proposes to explicitly
+                        represent the objects’ grasp affordances through continuous workspace
+                        goal regions (WGRs), which can approximate the goal regions (GRs) that
+                        are implicitly defined in the configuration space (C-Space). The result of
+                        doing this is an extended start-to-goal motion planning problem, which is
+                        solved with a sampling-based tree planner. Our pipeline not only
+                        improves the accuracy of grasping in complex environments but also
+                        significantly increases the success rate of manipulation tasks that involve
+                        pick and place operations in such settings. We validate the effectiveness
+                        of our approach through both simulation and real-robot experiments
+                        using the Franka Emika robotic manipulator.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--/ Abstract. -->
+
+        <!-- Paper video. -->
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Video</h2>
+                <div class="publication-video">
+                    <iframe allow="autoplay; encrypted-media"
+                            allowfullscreen frameborder="0"
+                            src="https://www.youtube.com/embed/0_MltWxtiNw?si=N_kqMZ7Iijt_O-mA"></iframe>
+                </div>
+            </div>
+        </div>
+        <!--/ Paper video. -->
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+
+        <!-- Animation. -->
+        <div class="columns is-centered">
+            <div class="column is-full-width">
+                <h2 class="title is-3 has-text-centered">Animation</h2>
+
+                <!-- Interpolating. -->
+                <h3 class="title is-4 has-text-centered">Interpolating states</h3>
+                <div class="content has-text-justified">
+                    <p>
+                        We can also animate the scene by interpolating the deformation latent codes of two input
+                        frames. Use the slider here to linearly interpolate between the left frame and the right
+                        frame.
+                    </p>
+                </div>
+                <div class="columns is-vcentered interpolation-panel">
+                    <div class="column interpolation-video-column">
+                        <div id="interpolation-image-wrapper">
+                            Loading...
+                        </div>
+                        <input class="is-fullwidth" id="interpolation-slider" max="318" min="0" step="1" style="
+    width: 100%;
+"
+                               type="range" value="25">
+                    </div>
+
+                </div>
+                <br/>
+                <!--/ Interpolating. -->
+            </div>
+        </div>
+        <!--/ Animation. -->
+
+
+        <!-- Concurrent Work. -->
+        <div class="columns is-centered" style="display: none">
+            <div class="column is-full-width">
+                <h2 class="title is-3 has-text-centered">Related Links</h2>
+
+                <div class="content">
+                    <p>
+                        There's a lot of excellent work that was introduced around the same time as ours.
+                    </p>
+                    <p>
+                        <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a>
+                        introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.
+                    </p>
+                    <p>
+                        <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a
+                            href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>
+                        both use deformation fields to model non-rigid scenes.
+                    </p>
+                    <p>
+                        Some works model videos with a NeRF by directly modulating the density, such as <a
+                            href="https://video-nerf.github.io/">Video-NeRF</a>, <a
+                            href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a
+                            href="https://neural-3d-video.github.io/">DyNeRF</a>
+                    </p>
+                    <p>
+                        There are probably many more by the time you are reading this. Check out <a
+                            href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>,
+                        and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF
+                        papers</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--/ Concurrent Work. -->
+
+    </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>@article{duman2025lewgr,
+          author    = {Duman, Furkan and Tok, Emin Safa and Hernandez-Vega, Juan},
+          title     = {Lazy Evaluation of Multi-Grasp Goals Guided by Motion Planning in Pick-and-Place Object Manipulation},
+          journal   = {-},
+          year      = {2026},
+        }
+        </code></pre>
+    </div>
+</section>
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-8">
+                <div class="content">
+                    <p>
+                        This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                        Commons Attribution-ShareAlike 4.0 International License</a>.
+                        This webpage template is from <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>.
+                        We sincerely thank <a href="https://keunhong.com/">Keunhong Park</a> for developing and open-sourcing this template.
+                      </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+
+.slider-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+    margin-bottom: 30px;
+    background-color: #333; /* Fallback for video load */
+}
+
+video {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+}
+
+.video-top {
+    clip-path: inset(0 50% 0 0);
+}
+
+.slider {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 4px; /* Default thin line */
+    background: white;
+    z-index: 10;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.1s ease, background 0.1s ease; /* Smooth width/bg transition */
+
+    /* New cooler design */
+    width: 13px; /* Wider for grab area and icon */
+    background-color: #D73648;
+    cursor: grab;
+}
+
+.slider.dragging {
+    cursor: grabbing;
+    box-shadow: 0 0 20px rgba(215, 54, 72, 1); /* More intense glow when dragging */
+}
+
+.slider-arrow {
+    color: white;
+    font-size: 20px; /* Adjust size for SVG */
+    display: flex; /* To center SVG */
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Ensure SVG fills height */
+}
+
+/* SVG icon styling */
+.slider-arrow svg {
+    fill: white;
+    fill: white;
+    width: 20px;
+    height: 20px;
+    animation: bounce-lr 1.5s infinite ease-in-out;
+}
+
+.slider-arrow.paused svg {
+    animation: none; /* Pause animation when dragging */
+}
+
+@keyframes bounce-lr {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(8px); /* More pronounced bounce */
+    }
+    25% {
+        transform: translateX(-8px);
+    }
+}
+
+.video-selector {
+    display: flex;
+    gap: 15px;
+    padding: 10px 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-top: 20px;
+    max-width: 800px;
+    width: 100%;
+    justify-content: center;
+}
+
+.video-selector::-webkit-scrollbar {
+    display: none;
+}
+
+.video-option {
+    background-color: #333;
+    color: #e0e0e0;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s ease-in-out;
+    white-space: nowrap;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.video-option:hover {
+    background-color: #444;
+    border-color: #D73648;
+    transform: translateY(-2px);
+}
+
+.video-option.active {
+    background-color: #D73648;
+    border-color: #ffffff;
+    color: white;
+    transform: translateY(-1px);
+}
