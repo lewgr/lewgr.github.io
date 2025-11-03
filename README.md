@@ -1,6 +1,6 @@
 # Lazy Evaluation of Multi-Grasp Goals Guided by Motion Planning in Pick-and-Place Object Manipulation
 <p align="center">
-<i>Furkan Duman, Emin Safa Tok, Juan Hernández</i>
+<i>Furkan Duman, Emin Safa Tok, Juan Hernández-Vega</i>
 </p>
 
 <p align="center">
@@ -31,7 +31,7 @@ If you find our work useful, please consider citing:
 
 ```bibtex
 @article{duman2025lewgr,
-    author    = {Duman, Furkan and Tok, Emin Safa and Hernandez-Vega, Juan},
+    author    = {Duman, Furkan and Tok, Emin Safa and Hernández-Vega, Juan},
     title     = {Lazy Evaluation of Multi-Grasp Goals Guided by Motion Planning in Pick-and-Place Object Manipulation},
     journal   = {-},
     year      = {2026},
