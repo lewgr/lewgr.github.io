@@ -1,7 +1,13 @@
 # Lazy Evaluation of Multi-Grasp Goals Guided by Motion Planning in Pick-and-Place Object Manipulation
+<p align="center">
+<i>Furkan Duman, Emin Safa Tok, Juan Hernández</i>
+</p>
 
-**Furkan Duman, Emin Safa Tok, Juan Hernández**
-
+<p align="center">
+    <b>
+        <a href="https://lewgr.github.io">Project Page</a>
+    </b>
+</p>
 
 <p align="center">
   <img src="static/images/pipeline.png" alt="Project Pipeline">
